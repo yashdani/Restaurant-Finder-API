@@ -5,12 +5,11 @@ import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
-foursquare_client_id = "client id here"
-foursquare_client_secret = "client secret here"
-#check foursquare api documentation for client id and secret
+foursquare_client_id = ""
+foursquare_client_secret = ""
 
 def findARestaurant(mealtype,location):
-    googleapikey = "your key"
+    googleapikey = ""
     locationString = location.replace(" " , "+")
     url = ('https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s'%(locationString , googleapikey))
     h = httplib2.Http()
