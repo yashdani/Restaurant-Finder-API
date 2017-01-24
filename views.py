@@ -12,9 +12,9 @@ sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
 
 
-foursquare_client_id = ""
-foursquare_client_secret = ""
-googleapikey = ""
+foursquare_client_id = "FZH3MW1T4HUXI1RDS4NX51HXZI3IYWBHS5WR2EAAQ52LXIN2"
+foursquare_client_secret = "4VS5XAHEEMIK5WA4X1M34JMDCZOCRV2ZBISHKHXUB1ITUSDZ"
+googleapikey = "AIzaSyAIEmOssTsiIMvlZshUq94ZaRimWhCOm1w"
 
 
 
@@ -28,10 +28,12 @@ app = Flask(__name__)
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
   if request.method == 'GET':
+  	# RETURN ALL RESTAURANTS IN DATABASE
   	restaurants = session.query(Restaurant).all()
   	return jsonify(restaurants = [i.serialize for i in restaurants])
 
   elif request.method == 'POST':
+  	# MAKE A NEW RESTAURANT AND STORE IT IN DATABASE
     location = request.args.get('location', '')
     mealType = request.args.get('mealType', '')
     restaurant_info = findARestaurant(mealType, location)
@@ -47,8 +49,10 @@ def all_restaurants_handler():
 def restaurant_handler(id):
   restaurant = session.query(Restaurant).filter_by(id = id).one()
   if request.method == 'GET':
+  	#RETURN A SPECIFIC RESTAURANT
   	return jsonify(restaurant = restaurant.serialize)
   elif request.method == 'PUT':
+  	#UPDATE A SPECIFIC RESTAURANT
   	address = request.args.get('address')
   	image = request.args.get('image')
   	name = request.args.get('name')
@@ -62,6 +66,7 @@ def restaurant_handler(id):
   	return jsonify(restaurant = restaurant.serialize)
 
   elif request.method == 'DELETE':
+  	#DELETE A SPECFIC RESTAURANT
   	session.delete(restaurant)
   	session.commit()
   	return "Restaurant Deleted"
